@@ -12,8 +12,8 @@ public class Queue {
 	public Integer remove() {
 		while (true) {
 			Node head = headref.get();
+			Node tail = tailref.get(); 
 			Node next = head.nextref.get();
-			Node tail = tailref.get();
 			
 			if(head == tail) {  // queue is empty or tail ref is not updated yet
 				if(next == null) 
@@ -35,8 +35,7 @@ public class Queue {
 			Node tail = tailref.get();
 
 			if (tail.nextref.compareAndSet(null, newNode)) {
-				tailref.compareAndSet(tail, newNode); // let other thread do it
-														// if not finished
+				tailref.compareAndSet(tail, newNode); // let other thread do it if not finished
 				return;
 			} else {
 				Node tailNext = tail.nextref.get();
